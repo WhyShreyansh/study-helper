@@ -1,0 +1,88 @@
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #18181f;
+      --border: #2a2a38;
+      --accent: #c8f06e;
+      --accent2: #7c5cfc;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+      --danger: #ff5f57;
+      --success: #4ade80;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(124,92,252,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,92,252,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glows */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-orb.one { width: 500px; height: 500px; background: rgba(124,92,252,0.12); top: -150px; right: -100px; }
+    .glow-orb.two { width: 400px; height: 400px; background: rgba(200,240,110,0.06); bottom: 0; left: -100px; }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+    }
+
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+    }
+    .logo span { color: var(--accent); font-style: italic; }
+
+    .nav-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      background: rgba(200,240,110,0.08);
+      border: 1px solid rgba(200,240,110,0.2);
+      padding: 0.3rem 0.7rem;
+      border-radius: 100px;
+      letter-spacing: 0.1em;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }

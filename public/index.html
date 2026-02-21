@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyForge — AI Question Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,400&display=swap" />
+  <link rel="stylesheet" href="styles.css">
+  </head>
+<body>
+  <div class="glow-orb one"></div>
+  <div class="glow-orb two"></div>
+
+  <nav>
+    <div class="logo">Study<span>Forge</span></div>
+    <div class="nav-badge">AI POWERED</div>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="hero-eyebrow">✦ Intelligent Question Generator</div>
+      <h1>Turn your notes into<br /><em>exam questions</em></h1>
+      <p>Upload any subject PDF and let AI generate targeted practice questions to supercharge your study sessions.</p>
+    </div>
+
+    <div class="upload-section">
+      <div class="upload-zone" id="uploadZone">
+        <div class="upload-icon">📄</div>
+        <h3>Drop your PDF here</h3>
+        <p>or <span onclick="document.getElementById('fileInput').click()">browse files</span> — any subject, any level</p>
+        <input type="file" id="fileInput" accept=".pdf" />
+      </div>
+
+      <div class="file-selected" id="fileSelected">
+        <div class="file-icon">📋</div>
+        <div class="file-info">
+          <div class="file-name" id="fileName"></div>
+          <div class="file-size" id="fileSize"></div>
+        </div>
+        <button class="remove-file" onclick="removeFile()" title="Remove file">✕</button>
+      </div>
