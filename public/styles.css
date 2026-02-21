@@ -395,3 +395,50 @@
 
     .progress-step { display: flex; align-items: center; gap: 0.3rem; }
     .progress-step.done { color: var(--accent); }
+
+       /* Results */
+    .results-section {
+      display: none;
+      margin-top: 2.5rem;
+      animation: fadeUp 0.5s ease both;
+    }
+    .results-section.show { display: block; }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: gap;
+    }
+
+    .results-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.75rem;
+      font-weight: 300;
+    }
+
+    .results-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .results-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-secondary {
+      padding: 0.6rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
