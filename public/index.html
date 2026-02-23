@@ -39,3 +39,32 @@
         </div>
         <button class="remove-file" onclick="removeFile()" title="Remove file">✕</button>
       </div>
+      <div class="error-box" id="errorBox">
+        <span>⚠</span>
+        <span id="errorMsg"></span>
+      </div>
+
+      <div class="settings-grid">
+        <div class="setting-group">
+          <div class="setting-label">Question Type</div>
+          <div class="type-pills">
+            <button class="pill active" data-type="mixed" onclick="selectType(this)">Mixed</button>
+            <button class="pill" data-type="mcq" onclick="selectType(this)">MCQ</button>
+            <button class="pill" data-type="short" onclick="selectType(this)">Short Answer</button>
+            <button class="pill" data-type="truefalse" onclick="selectType(this)">True/False</button>
+          </div>
+        </div>
+        <div class="setting-group">
+          <div class="setting-label">Number of Questions</div>
+          <div class="count-control">
+            <button class="count-btn" onclick="changeCount(-5)">−</button>
+            <span class="count-value" id="countValue">10</span>
+            <button class="count-btn" onclick="changeCount(5)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="generate-btn" id="generateBtn" onclick="generateQuestions()" disabled>
+        ⚡ Generate Questions
+      </button>
+    </div>
