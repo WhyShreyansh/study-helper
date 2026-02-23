@@ -101,3 +101,106 @@
       <div class="questions-list" id="questionsList"></div>
     </div>
   </main>
+
+  <script>
+    let selectedFile = null;
+    let questionType = 'mixed';
+    let questionCount = 10;
+    let generatedQuestions = [];
+
+    // Drag and drop
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+
+    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) handleFile(file);
+    });
+    uploadZone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+
+    function handleFile(file) {
+      if (file.type !== 'application/pdf') {
+        showError('Please upload a valid PDF file.');
+        return;
+      }
+      if (file.size > 20 * 1024 * 1024) {
+        showError('File too large. Maximum size is 20MB.');
+        return;
+      }
+      hideError();
+      selectedFile = file;
+      document.getElementById('fileName').textContent = file.name;
+      document.getElementById('fileSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
+      document.getElementById('fileSelected').classList.add('show');
+      document.getElementById('generateBtn').disabled = false;
+    }
+
+    function removeFile() {
+      selectedFile = null;
+      fileInput.value = '';
+      document.getElementById('fileSelected').classList.remove('show');
+      document.getElementById('generateBtn').disabled = true;
+    }
+
+    function selectType(btn) {
+      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      questionType = btn.dataset.type;
+    }
+
+    function changeCount(delta) {
+      questionCount = Math.max(5, Math.min(25, questionCount + delta));
+      document.getElementById('countValue').textContent = questionCount;
+    }
+
+    function showError(msg) {
+      const box = document.getElementById('errorBox');
+      document.getElementById('errorMsg').textContent = msg;
+      box.classList.add('show');
+    }
+
+    function hideError() {
+      document.getElementById('errorBox').classList.remove('show');
+    }
+
+    async function generateQuestions() {
+      if (!selectedFile) return;
+
+      hideError();
+      document.getElementById('generateBtn').disabled = true;
+      document.getElementById('progressSection').classList.add('show');
+      document.getElementById('resultsSection').classList.remove('show');
+
+      // Progress animation
+      animateProgress();
+
+      try {
+        const formData = new FormData();
+        formData.append('pdf', selectedFile);
+        formData.append('type', questionType);
+        formData.append('count', questionCount);
+
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) throw new Error(data.error || 'Server error');
+
+        generatedQuestions = data.questions;
+        showResults(data);
+
+      } catch (err) {
+        showError(err.message || 'Failed to generate questions. Make sure the server is running.');
+        document.getElementById('generateBtn').disabled = false;
+      } finally {
+        document.getElementById('progressSection').classList.remove('show');
+      }
+    }
