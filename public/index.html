@@ -204,3 +204,29 @@
         document.getElementById('progressSection').classList.remove('show');
       }
     }
+
+        let progressInterval;
+    function animateProgress() {
+      const fill = document.getElementById('progressFill');
+      const steps = ['step1', 'step2', 'step3'];
+      const labels = ['Extracting text from PDF...', 'Analyzing subject content...', 'Generating questions with AI...'];
+      let step = 0;
+      let pct = 0;
+
+      clearInterval(progressInterval);
+      steps.forEach(s => document.getElementById(s).classList.remove('done'));
+
+      progressInterval = setInterval(() => {
+        pct += Math.random() * 4 + 1;
+        if (pct >= 90) pct = 90;
+        fill.style.width = pct + '%';
+
+        const s = Math.floor((pct / 90) * 3);
+        for (let i = 0; i < Math.min(s, 3); i++) {
+          document.getElementById(steps[i]).classList.add('done');
+        }
+        if (s < 3) {
+          document.getElementById('progressLabel').textContent = labels[Math.min(s, 2)];
+        }
+      }, 300);
+    }
