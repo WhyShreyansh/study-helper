@@ -84,3 +84,20 @@
         <div class="progress-step" id="step3">◈ Generating questions</div>
       </div>
     </div>
+
+    <!-- Results -->
+    <div class="results-section" id="resultsSection">
+      <div class="results-header">
+        <div>
+          <div class="results-title">Your Questions</div>
+          <div class="results-meta" id="resultsMeta"></div>
+        </div>
+        <div class="results-actions">
+          <button class="btn-secondary" onclick="copyAll()">Copy All</button>
+          <button class="btn-secondary" onclick="downloadTxt()">Download .txt</button>
+          <button class="btn-secondary" onclick="resetAll()">New PDF</button>
+        </div>
+      </div>
+      <div class="questions-list" id="questionsList"></div>
+    </div>
+  </main>
