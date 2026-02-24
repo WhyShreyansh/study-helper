@@ -19,3 +19,16 @@ const PORT = process.env.PORT || 3000;
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
+
+// Serve static frontend
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Configure multer for PDF uploads
+const upload = multer({
+  dest: 'uploads/',
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === 'application/pdf') cb(null, true);
+    else cb(new Error('Only PDF files are allowed'), false);
+  }
+});
