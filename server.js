@@ -135,3 +135,12 @@ Rules:
     }
   }
 });
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+app.listen(PORT, () => {
+  console.log(`\n🚀 StudyForge server running at http://localhost:${PORT}`);
+  console.log(`   Make sure ANTHROPIC_API_KEY is set in your environment\n`);
+});
