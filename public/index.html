@@ -230,3 +230,85 @@
         }
       }, 300);
     }
+
+        function showResults(data) {
+      clearInterval(progressInterval);
+      document.getElementById('progressFill').style.width = '100%';
+      ['step1','step2','step3'].forEach(s => document.getElementById(s).classList.add('done'));
+
+      document.getElementById('resultsMeta').textContent =
+        `${data.questions.length} questions generated from ${data.subject || 'your notes'}`;
+
+      const list = document.getElementById('questionsList');
+      list.innerHTML = '';
+
+      data.questions.forEach((q, i) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.style.animationDelay = `${i * 0.06}s`;
+
+        let answerHtml = '';
+        if (q.options && q.options.length) {
+          const opts = q.options.map(o =>
+            `<li class="option-item ${o === q.answer ? 'correct' : ''}">${o === q.answer ? '✓ ' : ''}${o}</li>`
+          ).join('');
+          answerHtml = `<ul class="options-list">${opts}</ul>`;
+        } else {
+          answerHtml = `<div class="answer-text">${q.answer}</div>`;
+        }
+
+        card.innerHTML = `
+          <div class="question-header" onclick="toggleCard(this)">
+            <div class="q-number">Q${i + 1}</div>
+            <div class="q-type-badge">${q.type}</div>
+            <div class="q-text">${q.question}</div>
+            <div class="q-toggle">▼</div>
+          </div>
+          <div class="answer-section">
+            <div class="answer-inner">
+              <div class="answer-label">Answer</div>
+              ${answerHtml}
+            </div>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+
+      document.getElementById('resultsSection').classList.add('show');
+      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function toggleCard(header) {
+      header.closest('.question-card').classList.toggle('open');
+    }
+
+    function copyAll() {
+      const text = generatedQuestions.map((q, i) =>
+        `Q${i+1} [${q.type}]: ${q.question}\nAnswer: ${q.answer}\n`
+      ).join('\n');
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.target;
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy All', 2000);
+      });
+    }
+
+    function downloadTxt() {
+      const text = generatedQuestions.map((q, i) =>
+        `Q${i+1} [${q.type}]\n${q.question}\n\nAnswer: ${q.answer}\n${'─'.repeat(50)}\n`
+      ).join('\n');
+      const blob = new Blob([text], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'questions.txt';
+      a.click();
+    }
+
+    function resetAll() {
+      removeFile();
+      document.getElementById('resultsSection').classList.remove('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
