@@ -12,7 +12,7 @@ try {
   console.warn('pdf-parse not installed. Run: npm install pdf-parse');
 }
 
-const app =                    express();
+const app =  express();
 const PORT = process.env.PORT || 3000;
 
 // Initialize Anthropic client
